@@ -16,21 +16,26 @@ using System.Data;
  */
 
 
-namespace UpitApp2 {
-    internal class Program {
-        static void Main(string[] args) {
+namespace UpitApp2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
 
             OracleConnection con = null;
-            string conString = "Data Source = 160.99.12.92/GISLAB_PD; User Id = S18234; Password = Princered!05;";
+            string conString = "Data Source = <ip-addr>/GISLAB_PD; User Id = S18234; Password = <my-pass>";
 
-            try {
+            try
+            {
 
                 // korisnik unosi redni broj meseca
                 Console.WriteLine("Unesite redni broj meseca (Jan -> 1):");
             unos:
                 int mesec = Int32.Parse(Console.ReadLine());
 
-                if (mesec <= 0 || mesec > 12) {
+                if (mesec <= 0 || mesec > 12)
+                {
                     Console.WriteLine("Pogresan unos! Pokusajte ponovo.");
                     goto unos;
                 }
@@ -74,7 +79,8 @@ namespace UpitApp2 {
                 con.Close();
 
                 int i = 1;
-                foreach (DataRow r in ds.Tables["Donacije"].Rows) {
+                foreach (DataRow r in ds.Tables["Donacije"].Rows)
+                {
                     string punoIme = Convert.ToString(r[0]);
                     int rbrDonacije = Convert.ToInt32(r[1]);
                     string datumDonacije = Convert.ToString(r[2]);
@@ -94,11 +100,14 @@ namespace UpitApp2 {
                 if (i == 1)
                     Console.WriteLine("Ne postoje donacije obavljene " + mesec + ". meseca.");
             }
-            catch (Exception ec) {
+            catch (Exception ec)
+            {
                 Console.WriteLine("Doslo je do greske: " + ec.Message);
             }
-            finally {
-                if (con != null && con.State == System.Data.ConnectionState.Open) { 
+            finally
+            {
+                if (con != null && con.State == System.Data.ConnectionState.Open)
+                {
                     con.Close();
                     con.Dispose();
                 }

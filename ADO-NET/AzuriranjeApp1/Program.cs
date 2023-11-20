@@ -20,7 +20,7 @@ namespace Azuriranje_faza5_app1
         {
 
             OracleConnection con = null;
-            string conString = "Data Source = 160.99.12.92/GISLAB_PD; User Id = S18234; Password = Princered!05";
+            string conString = "Data Source = <ip-addr>/GISLAB_PD; User Id = S18234; Password = <my-pass>";
 
             try
             {

@@ -13,14 +13,18 @@ using System.Data;
  *  prebaciti u zdravstvenu ustanovu cije ime takodje unosi korisnik;
  */
 
-namespace AzuriranjeApp2 {
-    internal class Program {
-        static void Main(string[] args) {
+namespace AzuriranjeApp2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
 
             OracleConnection con = null;
-            string conString = "Data Source = 160.99.12.92/GISLAB_PD; User Id = S18234; Password = Princered!05";
+            string conString = "Data Source = <ip-addr>/GISLAB_PD; User Id = S18234; Password = <my-pass>";
 
-            try {
+            try
+            {
 
                 string nazivUstanove1, nazivUstanove2;
                 int mesec;
@@ -45,7 +49,7 @@ namespace AzuriranjeApp2 {
                 con = new OracleConnection(conString);
                 con.Open();
 
-            // 'cupamo' id ustanove u koju treba da prebacimo pacijente
+                // 'cupamo' id ustanove u koju treba da prebacimo pacijente
 
                 string cmdStr = "SELECT ID_USTANOVE FROM ZDRAVSTVENA_USTANOVA WHERE NAZIV = :naziv2";
                 OracleCommand cmd2 = new OracleCommand(cmdStr, con);
@@ -58,9 +62,9 @@ namespace AzuriranjeApp2 {
                 int novi_id = Convert.ToInt32(cmd2.ExecuteScalar());
                 cmd2.Dispose();
 
-            // sada je id u lokalnoj promenljivoj id
+                // sada je id u lokalnoj promenljivoj id
 
-            // sada pravimo lokalne kopije podataka koje treba da update-ujemo (iz tabele PACIJENT)
+                // sada pravimo lokalne kopije podataka koje treba da update-ujemo (iz tabele PACIJENT)
 
                 StringBuilder cmdSelectSB = new StringBuilder();
                 // IME, ADRESA, JMBG, KRVNA_GRUPA, RH_FAKTOR, POL, ID_USTANOVE, DAT_POCETKA_LECENJA
@@ -88,13 +92,14 @@ namespace AzuriranjeApp2 {
                 da.Fill(ds, "PACIJENTI");
                 // cmd1.Dispose();
 
-            // lokalne napravljene
+                // lokalne napravljene
 
                 OracleCommandBuilder cmdBuilder = new OracleCommandBuilder(da);
 
                 con.Close();
                 int i = 0;
-                foreach (DataRow r in ds.Tables["PACIJENTI"].Rows) {
+                foreach (DataRow r in ds.Tables["PACIJENTI"].Rows)
+                {
 
                     // za svaku torku izmeni id_ustanove na novi_id koji smo malopre dobili
 
@@ -108,11 +113,14 @@ namespace AzuriranjeApp2 {
                 cmd1.Dispose();
                 Console.WriteLine("Azurirano je " + i.ToString() + " podataka.");
             }
-            catch (Exception ec) {
+            catch (Exception ec)
+            {
                 Console.WriteLine("Doslo je do greske: " + ec.Message);
             }
-            finally {
-                if (con != null && con.State == ConnectionState.Open) {
+            finally
+            {
+                if (con != null && con.State == ConnectionState.Open)
+                {
                     con.Close();
                     con.Dispose();
                 }

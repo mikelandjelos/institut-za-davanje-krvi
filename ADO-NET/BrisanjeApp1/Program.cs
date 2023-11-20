@@ -10,21 +10,26 @@ using Oracle.ManagedDataAccess.Client;
  * @yahoo.com za donore koji imaju veci broj godina od korisnickog unosa.
  */
 
-namespace BrisanjeApp1 {
-    internal class Program {
-        static void Main(string[] args) {
+namespace BrisanjeApp1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
 
             OracleConnection con = null;
-            string conString = "Data Source = 160.99.12.92/GISLAB_PD; User Id = S18234; Password = Princered!05";
+            string conString = "Data Source = <ip-addr>/GISLAB_PD; User Id = S18234; Password = <my-pass>";
 
-            try {
+            try
+            {
 
                 Console.Write("Unesite broj godina: ");
                 int br_god;
             unos:
                 br_god = Int32.Parse(Console.ReadLine());
 
-                if (br_god > 65) { 
+                if (br_god > 65)
+                {
                     Console.WriteLine("Pogresan unos - broj godina veci od 65! Pokusajte ponovo.");
                     goto unos;
                 }
@@ -49,11 +54,14 @@ namespace BrisanjeApp1 {
                 Console.WriteLine("Brisanje izvrseno! (Obrisano torki: " + cmd.ExecuteNonQuery() + ")");
 
             }
-            catch (Exception ec) {
+            catch (Exception ec)
+            {
                 Console.WriteLine("Doslo je do greske pri izvrsavanju programa: " + ec.Message);
             }
-            finally {
-                if (con != null && con.State == System.Data.ConnectionState.Open) {
+            finally
+            {
+                if (con != null && con.State == System.Data.ConnectionState.Open)
+                {
                     con.Close();
                     con.Dispose();
                 }

@@ -14,22 +14,27 @@ using Oracle.ManagedDataAccess.Client;
  * (trenutno postoje samo donacije obavljene septembra i decembra)
  */
 
-namespace App1_upit_faza4 {
-    internal class Program {
-        static void Main(string[] args) {
-            
-            OracleConnection con = null;
-            string conString = "Data Source = 160.99.12.92/GISLAB_PD; User Id = S18234; Password = Princered!05";
+namespace App1_upit_faza4
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
 
-            try {
-            
+            OracleConnection con = null;
+            string conString = "Data Source = <ip-addr>/GISLAB_PD; User Id = S18234; Password = <my-pass>";
+
+            try
+            {
+
                 int mesec;
             unos:
                 // korisnik unosi redni broj meseca
                 Console.WriteLine("Unesite redni broj meseca (Januar -> 1, Decembar -> 12):");
                 mesec = Int32.Parse(Console.ReadLine());
 
-                if (mesec <= 0 || mesec > 12) {
+                if (mesec <= 0 || mesec > 12)
+                {
                     Console.WriteLine("Pogresan unos! Pokusajte ponovo.");
                     goto unos;
                 }
@@ -66,11 +71,13 @@ namespace App1_upit_faza4 {
                 // nase SQL komande biti relacija sa vise torki (odnosno nece biti skalar)
                 OracleDataReader dr = cmd.ExecuteReader();
 
-                if (dr.HasRows) {
+                if (dr.HasRows)
+                {
 
                     int i = 1;
 
-                    while (dr.Read()) {
+                    while (dr.Read())
+                    {
 
                         // uzimanje celija torke koja se trenutno nalazi u DataReader-u
                         // u lokalne promenljive radi njihovog stampanja na std izlaz
@@ -86,26 +93,30 @@ namespace App1_upit_faza4 {
                         i++;
                     }
                 }
-                else {
+                else
+                {
                     Console.WriteLine("Ne postoje donacije obavljenje " + mesec + ". meseca u godini!");
                 }
 
                 dr.Close();
 
             }
-            catch (Exception ec) {
+            catch (Exception ec)
+            {
                 Console.WriteLine("Doslo je do greske prilikom izvrsavanja: " + ec.Message);
             }
-            finally {
+            finally
+            {
 
-                if (con != null && con.State == System.Data.ConnectionState.Open) { 
+                if (con != null && con.State == System.Data.ConnectionState.Open)
+                {
                     con.Close();
                     con.Dispose();
                 }
 
                 con = null;
             }
-            
+
         }
     }
 }
